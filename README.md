@@ -1,4 +1,4 @@
-# DKALKI Portfolio
+# Portfolio
 
 A responsive one-page portfolio draft for `dkalki.com`, built with plain HTML and CSS. It uses the final logo from `dupatanekrishna/brand-identity-archive` and the archived final tagline, and presents an editable starting set of cloud/platform, SRE/observability, and DevSecOps/secure delivery offerings.
 
