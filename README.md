@@ -1,6 +1,6 @@
 # Portfolio
 
-A responsive one-page portfolio draft for `dkalki.com`, built with plain HTML and CSS. It uses the final logo from `dupatanekrishna/brand-identity-archive` and the archived final tagline, and presents an editable starting set of cloud/platform, SRE/observability, and DevSecOps/secure delivery offerings.
+A responsive one-page portfolio for `krishna.dupatane.portfolio.dkalki.com`, built with plain HTML and CSS. It uses the final logo from `dupatanekrishna/brand-identity-archive` and the archived final tagline, and presents an editable starting set of cloud/platform, SRE/observability, and DevSecOps/secure delivery offerings.
 
 SRE and DevSecOps summaries are based on the separate private reference repositories; the public site does not link to those private repositories.
 
@@ -9,17 +9,17 @@ SRE and DevSecOps summaries are based on the separate private reference reposito
 - `index.html` — page copy, navigation, service descriptions, and lab summaries
 - `styles.css` — responsive visual system using the navy, teal, gold, and off-white palette
 - `assets/DUPATANE_Logo_Final.png` — selected logo artwork from the brand archive
-- `CNAME` — custom domain `dkalki.com`
+- `CNAME` — custom domain `krishna.dupatane.portfolio.dkalki.com`
 
 ## GitHub Pages setup
 
-1. In `dupatanekrishna/portfolio_v2`, **Settings → Pages** is set to publish from **`main` / (root)**.
-2. This repository is public, so GitHub Pages is available on GitHub Free. The source files are visible and can be cloned.
-3. Add `dkalki.com` in the Pages custom domain setting and verify ownership with GitHub.
-4. At the domain registrar, configure the DNS records GitHub gives you for the apex domain. Add `www` only if you want a `www.dkalki.com` alias. The `CNAME` file does not configure GitHub settings or DNS by itself.
-5. Pushes to `main` trigger the GitHub Pages branch build.
+1. In `dupatanekrishna/portfolio_v2`, **Settings → Pages** publishes from **`main` / (root)**.
+2. The Pages custom domain is `krishna.dupatane.portfolio.dkalki.com`, and the repository `CNAME` file contains that same hostname.
+3. At the active DNS provider, the CNAME owner/Host is `krishna.dupatane.portfolio` and its target is `dupatanekrishna.github.io`. Check `dig NS dkalki.com +short` to find the authoritative DNS provider.
+4. GitHub profile verification of `dkalki.com` is a separate ownership check. GitHub showed the domain as **Verified** on 3 October 2026; keep its TXT record in DNS.
+5. GitHub Pages HTTPS is enabled for the portfolio hostname. Pushes to `main` trigger the branch build.
 
-Use [GitHub's custom-domain guide](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site) for current DNS values and verification instructions.
+The `CNAME` file and the Pages setting do not create the DNS record. Use [GitHub's custom-domain guide](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site) for current instructions.
 
 ## Iteration and reuse
 
