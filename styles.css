@@ -20,7 +20,7 @@ a { color: inherit; }
 .skip-link:focus { top: 1rem; }
 .site-header { position: absolute; z-index: 2; top: 0; left: 0; right: 0; display: grid; grid-template-columns: 1fr auto; align-items: center; max-width: var(--max); margin: auto; padding: 1.45rem 1.5rem; }
 .site-logo-link { grid-column: 1; justify-self: start; display: block; width: clamp(138px, 16vw, 190px); line-height: 0; }
-.site-logo-link img { display: block; width: 100%; height: auto; }
+.site-logo-link img { display: block; width: 100%; height: auto; mix-blend-mode: screen; }
 .site-header nav { grid-column: 2; justify-self: end; display: flex; gap: clamp(1rem, 3vw, 2.5rem); }
 .site-header nav a, .site-footer a { color: #d2d9e4; text-decoration: none; font-size: .88rem; }
 .site-header nav a:hover, .site-footer a:hover, .text-link:hover { color: var(--teal); }
