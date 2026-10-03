@@ -25,9 +25,9 @@ a { color: inherit; }
 .site-header nav a, .site-footer a { color: #d2d9e4; text-decoration: none; font-size: .88rem; }
 .site-header nav a:hover, .site-footer a:hover, .text-link:hover { color: var(--teal); }
 .hero { min-height: 710px; position: relative; display: grid; place-items: center; overflow: hidden; padding: 8rem 1.5rem 5rem; background: radial-gradient(ellipse at 50% 36%, #111e35 0, #080d18 68%, #05070b 100%); }
-.hero-content { z-index: 1; width: min(100%, 850px); text-align: center; }
-.hero-logo-frame { width: min(100%, 900px); aspect-ratio: 4.3 / 1; overflow: hidden; margin: 0 auto 1.5rem; background: #000; }
-.hero-logo { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.hero-content { z-index: 1; width: min(100%, 960px); text-align: center; }
+.hero-logo-frame { width: min(100%, 960px); aspect-ratio: 4.36 / 1; overflow: hidden; margin: 0 auto 1.5rem; background: #000; border-radius: 12px; }
+.hero-logo { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center; }
 .tagline { margin: 0; font-size: clamp(2rem, 5vw, 3.6rem); font-weight: 720; line-height: 1.13; letter-spacing: -.045em; }
 .tagline span { color: var(--teal); }
 .hero-copy { max-width: 610px; margin: 1.4rem auto 0; color: #c3cede; font-size: clamp(1rem, 1.7vw, 1.14rem); }
