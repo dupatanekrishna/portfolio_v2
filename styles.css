@@ -75,7 +75,7 @@ h2 { margin: 0; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.12; letter-s
 .site-footer { display: flex; align-items: center; justify-content: space-between; gap: 1rem; max-width: var(--max); margin: auto; padding: 1.5rem; color: #9eacc0; }
 .site-footer p { margin: 0; font-size: .75rem; text-align: center; }
 .footer-brand { display: inline-flex; flex: 0 0 auto; width: 80px; line-height: 0; }
-.footer-brand img { display: block; width: 100%; height: auto; }
+.footer-brand img { display: block; width: 100%; height: auto; mix-blend-mode: screen; }
 @media (max-width: 800px) {
   .site-header { position: relative; background: transparent; }
   .hero { min-height: 620px; padding-top: 3rem; }
