@@ -18,10 +18,10 @@ body { margin: 0; background: var(--navy-deep); color: var(--white); font-family
 a { color: inherit; }
 .skip-link { position: absolute; left: 1rem; top: -4rem; z-index: 10; padding: .7rem 1rem; background: var(--teal); color: var(--navy-deep); }
 .skip-link:focus { top: 1rem; }
-.site-header { position: absolute; z-index: 2; top: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between; max-width: var(--max); margin: auto; padding: 1.45rem 1.5rem; }
-.site-name { text-decoration: none; font-size: 1.15rem; font-weight: 850; letter-spacing: .16em; }
-.site-name span { color: var(--gold); }
-.site-header nav { display: flex; gap: clamp(1rem, 3vw, 2.5rem); }
+.site-header { position: absolute; z-index: 2; top: 0; left: 0; right: 0; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; max-width: var(--max); margin: auto; padding: 1.45rem 1.5rem; }
+.site-logo-link { grid-column: 2; justify-self: center; display: block; width: clamp(138px, 16vw, 190px); line-height: 0; }
+.site-logo-link img { display: block; width: 100%; height: auto; }
+.site-header nav { grid-column: 3; justify-self: end; display: flex; gap: clamp(1rem, 3vw, 2.5rem); }
 .site-header nav a, .site-footer a { color: #d2d9e4; text-decoration: none; font-size: .88rem; }
 .site-header nav a:hover, .site-footer a:hover, .text-link:hover { color: var(--teal); }
 .hero { min-height: 710px; position: relative; display: grid; place-items: center; overflow: hidden; padding: 8rem 1.5rem 5rem; background: radial-gradient(ellipse at 50% 36%, #111e35 0, #080d18 68%, #05070b 100%); }
@@ -86,7 +86,8 @@ h2 { margin: 0; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.12; letter-s
   .work-card { min-height: 230px; }
 }
 @media (max-width: 540px) {
-  .site-header { align-items: flex-start; flex-direction: column; gap: .65rem; padding: 1rem 1.15rem; }
+  .site-header { display: flex; align-items: center; flex-direction: column; gap: .65rem; padding: 1rem 1.15rem; }
+  .site-logo-link { width: min(58vw, 190px); }
   .site-header nav { width: 100%; justify-content: space-between; gap: .6rem; }
   .site-header nav a { font-size: .78rem; }
   .hero { min-height: 570px; padding: 3rem 1.1rem 4rem; }
