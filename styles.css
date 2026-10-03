@@ -74,7 +74,7 @@ h2 { margin: 0; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.12; letter-s
 .text-link { display: inline-flex; gap: .5rem; margin-top: .5rem; color: #087b70; font-weight: 800; text-decoration: none; }
 .site-footer { display: flex; align-items: center; justify-content: space-between; gap: 1rem; max-width: var(--max); margin: auto; padding: 1.5rem; color: #9eacc0; }
 .site-footer p { margin: 0; font-size: .75rem; text-align: center; }
-.footer-brand { display: inline-flex; flex: 0 0 auto; width: clamp(112px, 12vw, 150px); line-height: 0; }
+.footer-brand { display: inline-flex; flex: 0 0 auto; width: 80px; line-height: 0; }
 .footer-brand img { display: block; width: 100%; height: auto; }
 @media (max-width: 800px) {
   .site-header { position: relative; background: transparent; }
