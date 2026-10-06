@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Groot Chatbot Lab — DUPATANE</title>
+  <link rel="stylesheet" href="../../styles.css">
+  <link rel="stylesheet" href="../lab.css">
+</head>
+<body class="lab-page">
+  <header class="lab-header">
+    <a class="site-logo-link" href="../../"><img src="../../assets/DUPATANE_Logo_Final.png" alt="DUPATANE"></a>
+    <a class="lab-back" href="../../#work">← Back to hands-on labs</a>
+  </header>
+
+  <section class="lab-hero">
+    <div class="lab-hero-inner">
+      <p class="lab-kicker">AI ASSISTANT · CLOUDFLARE · OPENAI</p>
+      <h1>Building a guarded AI assistant for a static site</h1>
+      <p class="lab-lead">A reproducible implementation that connects a GitHub Pages portfolio to an OpenAI-backed assistant through a Cloudflare Worker, with official-source grounding, D1-backed quotas, secret management, and operational validation.</p>
+      <div class="lab-meta">
+        <span class="lab-chip">GitHub Pages</span>
+        <span class="lab-chip">Cloudflare Workers</span>
+        <span class="lab-chip">D1</span>
+        <span class="lab-chip">OpenAI Responses API</span>
+        <span class="lab-chip">Wrangler</span>
+        <span class="lab-chip">CORS</span>
+      </div>
+    </div>
+  </section>
+
+  <main class="lab-content">
+    <section class="lab-section">
+      <h2>Architecture</h2>
+      <pre class="lab-flow">Visitor browser
+      ↓ HTTPS fetch
+GitHub Pages portfolio + Ask Groot widget
+      ↓ POST /api/chat
+Cloudflare Worker
+  ↙          ↓             ↘
+D1 quota   OpenAI API   Origin and input validation
+             ↓
+       official-documentation web search
+             ↓
+     short answer + source links + quota metadata</pre>
+      <p>The static page owns the user interface. The Worker is the server-side boundary: it keeps the OpenAI key out of the browser, applies request controls, calls the model, and returns a small JSON contract.</p>
+    </section>
+
+    <section class="lab-section">
+      <h2>What was implemented</h2>
+      <div class="lab-grid">
+        <article class="lab-card">
+          <span class="lab-number">01</span>
+          <h3>Browser integration</h3>
+          <p>The widget reads a public Worker base URL from <code>data-groot-api-base</code>, sends a short conversation over HTTPS, and renders safe answer text and validated links.</p>
+        </article>
+        <article class="lab-card">
+          <span class="lab-number">02</span>
+          <h3>Guarded API boundary</h3>
+          <p>The Worker handles CORS, body-size limits, message validation, bounded history, timeouts, no-store responses, and an explicit health endpoint.</p>
+        </article>
+        <article class="lab-card">
+          <span class="lab-number">03</span>
+          <h3>Grounded answers</h3>
+          <p>The Responses API uses web search restricted to approved official documentation domains; returned sources are checked again before they reach the browser.</p>
+        </article>
+        <article class="lab-card">
+          <span class="lab-number">04</span>
+          <h3>Quota and operations</h3>
+          <p>Cloudflare D1 stores a salted IP hash and rolling 24-hour count. Wrangler deploys the Worker, migrations, and secrets while the public page stays static.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="lab-section">
+      <h2>Request lifecycle</h2>
+      <pre class="lab-flow">OPTIONS /api/chat
+        ↓
+CORS preflight response
+
+GET /api/health
+        ↓
+Worker + D1 binding check
+
+POST /api/chat
+        ↓
+Validate origin, size, history and message
+        ↓
+Read rolling quota from D1
+        ↓
+Call OpenAI Responses API with web search
+        ↓
+Validate answer and official source URLs
+        ↓
+Return answer, sources and quota status</pre>
+      <div class="lab-note">The app allows three accepted questions per IP in a rolling 24-hour window. The fourth request is rejected before another model call. This is an application safeguard, not a promise about provider billing.</div>
+    </section>
+
+    <section class="lab-section">
+      <h2>Deployment workflow</h2>
+      <pre class="lab-code">wrangler login --device
+wrangler d1 create groot-usage
+wrangler d1 migrations apply groot-usage --remote
+wrangler secret put OPENAI_API_KEY --name groot-api
+wrangler secret put RATE_LIMIT_SALT --name groot-api
+wrangler deploy</pre>
+      <p>Deployment was verified with health and chat requests using the live portfolio origin. The Worker endpoint is <code>https://groot-api.support-dupatane.workers.dev</code>. The complete runbook, source, migration, troubleshooting, operations, and rollback notes are kept in the private companion repository <code>groot-openai-api-chatbot</code>.</p>
+    </section>
+
+    <section class="lab-section">
+      <h2>Engineering outcomes</h2>
+      <ul class="lab-outcomes">
+        <li>Separate a static frontend from a protected server-side API.</li>
+        <li>Explain the role of Cloudflare Workers and D1 without introducing a VM or Lambda function.</li>
+        <li>Keep provider credentials in managed secrets rather than HTML, JavaScript, or Git history.</li>
+        <li>Use prompt constraints, web-search domain filters, and source validation for concise documentation answers.</li>
+        <li>Design a small quota that reduces accidental spend and abusive traffic.</li>
+        <li>Deploy, verify, document, and roll back the system through reviewable Git changes.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="lab-footer">
+    <span>Curated from private engineering lab material.</span>
+    <a href="../../#work">Back to portfolio</a>
+  </footer>
+</body>
+</html>
