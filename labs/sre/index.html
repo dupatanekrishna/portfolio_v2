@@ -1,0 +1,23 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SRE Lab — DUPATANE</title><link rel="stylesheet" href="../../styles.css"><link rel="stylesheet" href="../lab.css"></head><body class="lab-page"><header class="lab-header"><a class="site-logo-link" href="../../"><img src="../../assets/DUPATANE_Logo_Final.png" alt="DUPATANE"></a><a class="lab-back" href="../../#work">← Back to hands-on labs</a></header><section class="lab-hero"><div class="lab-hero-inner"><p class="lab-kicker">SRE · OBSERVABILITY · RELIABILITY</p><h1>Investigating reliability across the stack</h1><p class="lab-lead">A curated view of practical SRE work covering observability, database incidents, Kubernetes/EKS, Terraform reliability, recovery planning, and secure operations.</p><div class="lab-meta"><span class="lab-chip">OpenTelemetry</span><span class="lab-chip">Prometheus</span><span class="lab-chip">Grafana</span><span class="lab-chip">PostgreSQL</span><span class="lab-chip">Kubernetes / EKS</span><span class="lab-chip">Terraform</span></div></div></section><main class="lab-content"><section class="lab-section"><h2>Architecture</h2><pre class="lab-flow">Application / PostgreSQL
+        ↓
+OpenTelemetry SDK
+        ↓
+OpenTelemetry Collector
+   ↙        ↓        ↘
+Prometheus  Loki    Tempo
+      \      |      /
+          Grafana
+             ↓
+      Alertmanager
+             ↓
+     Incident channel</pre></section><section class="lab-section"><h2>What was built and tested</h2><div class="lab-grid"><article class="lab-card"><span class="lab-number">01</span><h3>Observability stack</h3><p>Flask, PostgreSQL, OpenTelemetry Collector, Prometheus, Grafana, Loki, Tempo, Node Exporter and Alertmanager in a repeatable Docker lab.</p></article><article class="lab-card"><span class="lab-number">02</span><h3>Incident simulation</h3><p>Injected a controlled slow database query and correlated application latency, traces and PostgreSQL wait-state evidence.</p></article><article class="lab-card"><span class="lab-number">03</span><h3>Reliability operations</h3><p>Documented incident response, RTO/RPO, backup/restore, Multi-AZ, read replicas and recovery validation.</p></article><article class="lab-card"><span class="lab-number">04</span><h3>Platform troubleshooting</h3><p>Covered Kubernetes workload failures, service discovery, Pod-to-RDS connectivity, IAM/IRSA and Terraform drift/state recovery.</p></article></div></section><section class="lab-section"><h2>Incident case study</h2><pre class="lab-flow">Symptom: /db latency ≈ 3 seconds
+        ↓
+Prometheus detects elevated latency
+        ↓
+Tempo trace shows slow SELECT span
+        ↓
+pg_stat_activity shows PgSleep wait
+        ↓
+Query restored
+        ↓
+Latency and alert return to normal</pre><div class="lab-note">Recovery was validated using the same signals that detected the incident: application latency, metrics, traces and database activity.</div></section><section class="lab-section"><h2>Operational approach</h2><pre class="lab-flow">Detect → Alert → Acknowledge → Investigate → Mitigate → Verify → RCA</pre><p>The troubleshooting path is followed end to end rather than stopping at a single component:</p><pre class="lab-flow">DNS → CDN/WAF → ALB → target group → Service → EndpointSlice → Pod → App → RDS</pre></section><section class="lab-section"><h2>Engineering outcomes</h2><ul class="lab-outcomes"><li>Correlate metrics, logs, traces and database evidence.</li><li>Diagnose latency and dependency failures methodically.</li><li>Reason about SLI/SLO/SLA, error budgets and alert quality.</li><li>Handle Terraform drift, imports and state recovery safely.</li><li>Troubleshoot Kubernetes networking and IAM access.</li><li>Plan secret/certificate rotation and recovery validation.</li></ul></section></main><footer class="lab-footer"><span>Curated from private engineering lab material.</span><a href="../../#work">Back to portfolio</a></footer></body></html>
