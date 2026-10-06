@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-groot-api-base="https://groot-api.support-dupatane.workers.dev">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,6 +8,7 @@
   <title>DUPATANE — Cloud, DevOps &amp; Platform Engineering</title>
   <link rel="canonical" href="https://krishna.dupatane.portfolio.dkalki.com/">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="groot-chat.css">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -121,5 +122,37 @@
     <p>© 2026 Krishna Dupatane. Content and artwork reserved. No reuse rights are granted.</p>
     <a href="#top">Back to top ↑</a>
   </footer>
+  <aside class="groot-widget" aria-label="Groot DevOps assistant">
+    <button class="groot-launcher" id="groot-launcher" type="button" aria-expanded="false" aria-controls="groot-panel">
+      <img class="groot-launcher-avatar" src="assets/groot-avatar.webp" alt="">
+      <span>Ask Groot</span>
+    </button>
+    <section class="groot-panel" id="groot-panel" role="dialog" aria-labelledby="groot-title" aria-modal="false" hidden>
+      <header class="groot-panel-header">
+        <div class="groot-avatar" aria-hidden="true"><img src="assets/groot-avatar.webp" alt=""></div>
+        <div class="groot-heading">
+          <p class="groot-kicker">YOUR DEVOPS BUDDY</p>
+          <h2 id="groot-title">Groot</h2>
+          <p class="groot-mode" id="groot-mode">Connecting to Groot…</p>
+        </div>
+        <button class="groot-close" id="groot-close" type="button" aria-label="Close Groot chat">×</button>
+      </header>
+      <div class="groot-messages" id="groot-messages" role="log" aria-live="polite" aria-relevant="additions text" tabindex="0">
+        <div class="groot-message groot-assistant-message">Hi! I'm Groot. Ask me a DevOps question, and I'll look for a short answer in official docs. 🌿</div>
+        <div class="groot-credit-note">Each live answer uses paid API credits (AI tokens). Please use Groot responsibly.</div>
+      </div>
+      <div class="groot-suggestions" aria-label="Example questions">
+        <button type="button" data-groot-prompt="What is DNS?">DNS basics</button>
+        <button type="button" data-groot-prompt="What does Kubernetes do?">Kubernetes</button>
+      </div>
+      <form class="groot-form" id="groot-form">
+        <label class="visually-hidden" for="groot-input">Ask Groot a DevOps question</label>
+        <input id="groot-input" name="message" type="text" maxlength="500" autocomplete="off" placeholder="Ask a short question…" required>
+        <button id="groot-send" type="submit" aria-label="Send question">Send <span aria-hidden="true">↑</span></button>
+      </form>
+      <p class="groot-footnote" id="groot-footnote">Up to 3 questions per IP every 24 hours. Live answers use paid AI credits.</p>
+    </section>
+  </aside>
+  <script src="groot-chat.js" defer></script>
 </body>
 </html>
