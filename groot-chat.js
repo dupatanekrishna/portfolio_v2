@@ -22,6 +22,16 @@ let quotaResetAt = null;
 let quotaBlocked = false;
 let busy = false;
 
+function trackChatEvent(eventName) {
+  try {
+    if (window.siteAnalytics && typeof window.siteAnalytics.track === "function") {
+      window.siteAnalytics.track(eventName);
+    }
+  } catch (_) {
+    // Analytics must not interfere with chat.
+  }
+}
+
 function safeOfficialSource(source) {
   try {
     const url = new URL(source.url);
@@ -148,6 +158,7 @@ async function submitQuestion(event) {
   const question = input.value.trim();
   if (!question || busy) return;
 
+  trackChatEvent("chat_message_sent");
   appendMessage(question, "user");
   conversation.push({ role: "user", content: question });
   input.value = "";
@@ -167,6 +178,7 @@ async function submitQuestion(event) {
     const data = await response.json();
     typing.remove();
     if (!response.ok) {
+      trackChatEvent("chat_error");
       applyQuota(data.quota);
       const notice = data.quota?.limitReached
         ? `Try Groot again after ${data.quota.resetAt ? new Date(data.quota.resetAt).toLocaleString() : "the 24-hour limit resets"}.`
@@ -174,11 +186,13 @@ async function submitQuestion(event) {
       appendMessage(data.error || "Groot could not answer that. Please try again later.", "assistant", [], notice);
       return;
     }
+    trackChatEvent("chat_response_received");
     applyQuota(data.quota);
     const answer = typeof data.answer === "string" ? data.answer : "Groot could not read that answer.";
     appendMessage(answer, "assistant", Array.isArray(data.sources) ? data.sources : [], lastQuestionNotice(data.quota));
     conversation.push({ role: "assistant", content: answer });
   } catch (error) {
+    trackChatEvent("chat_error");
     typing.remove();
     appendMessage(error.message || "Groot could not answer that. Please try again later.", "assistant");
   } finally {
@@ -192,6 +206,7 @@ launcher.addEventListener("click", () => {
   panel.hidden = !willOpen;
   launcher.setAttribute("aria-expanded", String(willOpen));
   if (willOpen) {
+    trackChatEvent("chat_open");
     refreshMode();
     input.focus();
   }
