@@ -42,6 +42,23 @@ The complete architecture, Worker source, D1 migration, deployment lab, security
 
 That companion repository is currently private. The live portfolio does not read GitHub repositories or private project code; it currently answers from the configured official documentation sources only.
 
+## Companion project: Site analytics
+
+The portfolio has a separate analytics service for aggregate visit and interaction reports. Its source and setup notes are in the [analytics folder of the Cloudflare repository](https://github.com/dupatanekrishna/cloudflare/tree/main/analytics).
+
+| Component | Current location |
+| --- | --- |
+| Dashboard | [analytics.dkalki.com](https://analytics.dkalki.com) |
+| Event API and tracker | [site-analytics-api Worker](https://site-analytics-api.support-dupatane.workers.dev) |
+| Cloudflare database | D1 database named `site-analytics` |
+| Portfolio site ID | `dkalki-portfolio` |
+
+The tracker is designed to report page views by path; section and internal-link clicks; external-link destination hostnames; approximate active time while a page is visible; browser, operating-system, and device categories; approximate IP-derived location; and named Groot chatbot events. The Groot widget sends event types such as opening the chat, sending a message, receiving a response, and errors. It does not send the visitor's message text.
+
+These are aggregate, approximate analytics. A random temporary tab ID groups events from one browser tab; it does not identify a person or connect visits across devices. The service does not store visitor names, account IDs, IP addresses, raw user-agent strings, query strings, form values, or chatbot message text. It honors Do Not Track and Global Privacy Control signals. Location is approximate and IP-derived, not GPS. Browser, device, and operating-system categories can be misclassified. Events are deleted after 90 days, and persistent Worker observability logs are disabled. Report data requires the Cloudflare Worker `ADMIN_TOKEN`.
+
+**Tracker URL check:** the current `index.html` references `https://analytics.dkalki.com/tracker.js`. The analytics Worker serves `/tracker.js` from its `workers.dev` address, and the script derives its event API origin from its own URL. The dashboard custom domain is hosted separately on GitHub Pages, so verify that the tracker URL resolves to the Worker before relying on live reports. This documentation change does not alter the site HTML or deployment settings.
+
 ## Files
 
 - index.html — page copy, navigation, service descriptions, lab summaries, and the Groot widget markup
