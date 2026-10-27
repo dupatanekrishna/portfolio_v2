@@ -4,6 +4,10 @@ A responsive one-page portfolio for **krishna.dupatane.portfolio.dkalki.com**, b
 
 The site is hosted as a static GitHub Pages site. It also includes a small Groot DevOps assistant whose server-side API is deployed separately on Cloudflare Workers.
 
+## Completed hands-on lab: CinemaPlay Beta (October 2026)
+
+A separate **DUPATANE-branded 4K HLS streaming beta** uses private S3 → MediaConvert → CloudFront OAC, GoDaddy DNS, and a free AWS ACM certificate. The user confirmed the player works on a custom HTTPS hostname, with 2160p/1080p/540p/360p quality options and a CloudFront default root object for the clean URL. Personal media and direct watch links are excluded from the repository. This is an unlisted, single-film beta, not authenticated multi-tenant hosting. Read the [portfolio case study](labs/cinemaplay/) and [sanitized AWS runbook](https://github.com/dupatanekrishna/aws_s3_documents/blob/main/labs/cinemaplay-beta-deployment.md).
+
 ## Groot DevOps assistant
 
 The floating Ask Groot widget is embedded in the static page and uses this request path:
