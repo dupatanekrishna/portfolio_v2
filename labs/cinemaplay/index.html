@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CinemaPlay Beta — 4K Streaming Lab | DUPATANE</title>
+<meta name="description" content="Completed cloud video streaming lab: private S3, MediaConvert four-rendition HLS, CloudFront, ACM HTTPS and GoDaddy custom DNS.">
+<link rel="stylesheet" href="../../styles.css"><link rel="stylesheet" href="../lab.css">
+<script defer src="https://analytics.dkalki.com/tracker.js" data-site-id="dkalki-portfolio"></script>
+</head><body class="lab-page">
+<header class="lab-header"><a class="site-logo-link" href="../../"><img src="../../assets/DUPATANE_Logo_Final.png" alt="DUPATANE"></a><a class="lab-back" href="../../#work">← Back to hands-on labs</a></header>
+<section class="lab-hero"><div class="lab-hero-inner"><p class="lab-kicker">AWS · VIDEO ON DEMAND · EDGE DELIVERY</p><h1>CinemaPlay Beta: 4K adaptive streaming</h1>
+<p class="lab-lead">A working DUPATANE-branded cloud video player with a custom HTTPS domain, private S3 origin, MediaConvert HLS renditions, CloudFront delivery and manual/automatic quality selection.</p>
+<div class="lab-meta"><span class="lab-chip">S3 + OAC</span><span class="lab-chip">MediaConvert</span><span class="lab-chip">CloudFront</span><span class="lab-chip">ACM / TLS</span><span class="lab-chip">GoDaddy DNS</span><span class="lab-chip">HLS.js</span></div></div></section>
+<main class="lab-content">
+<section class="lab-section"><h2>System architecture</h2><pre class="lab-flow">Source video → Private S3
+    ↓
+AWS Elemental MediaConvert
+    ↓
+HLS master + 4 rendition playlists + segments
+    ↓
+Private S3 origin ← CloudFront OAC
+    ↓
+CloudFront (HTTPS + ACM certificate)
+    ↑
+GoDaddy subdomain CNAME
+    ↓
+DUPATANE CinemaPlay player (HLS.js / native HLS)</pre><div class="lab-note">The page is served from the same distribution as the HLS files, reducing browser cross-origin complications. The source video and private AWS identifiers are not published.</div></section>
+<section class="lab-section"><h2>What works</h2>
+<div class="lab-grid">
+<article class="lab-card"><span class="lab-number">01</span><h3>4K ABR streaming</h3><p>The HLS master exposes 3840×2160, 1920×1080, 960×540 and 640×360 renditions. The player shows Auto and manual quality options.</p></article>
+<article class="lab-card"><span class="lab-number">02</span><h3>Branded clean URL</h3><p>GoDaddy DNS points a product beta subdomain to CloudFront. An ACM-issued certificate enables HTTPS, and the default root object serves watch.html at /.</p></article>
+<article class="lab-card"><span class="lab-number">03</span><h3>Private origin, controlled updates</h3><p>CloudFront OAC protects the S3 origin; scoped IAM controls HTML uploads and cache invalidations. Public CloudFront viewing is still unlisted, not authenticated.</p></article>
+<article class="lab-card"><span class="lab-number">04</span><h3>Operational debugging</h3><p>Diagnosed S3 access denial, invalidation permissions, DNS resolver mismatch, HLS CORS behavior and stale HTML deployment paths.</p></article>
+</div></section>
+<section class="lab-section"><h2>Measured playlist variants</h2><pre class="lab-flow">2160p  · 3840×2160 · 22.26 Mbps avg (41.96 peak)
+1080p  · 1920×1080 ·  7.53 Mbps avg (14.87 peak)
+ 540p  ·  960×540  ·  2.46 Mbps avg ( 5.74 peak)
+ 360p  ·  640×360  ·  1.06 Mbps avg ( 2.15 peak)</pre><p>Values are playlist metadata, not a measurement of a viewer's throughput. A screenshot of selecting 2160p does not independently prove decoded 4K frames or an uninterrupted full-film watch.</p></section>
+<section class="lab-section"><h2>Verification and limitations</h2>
+<ul class="lab-outcomes"><li>User-confirmed: custom-domain branded player working; four manual renditions available.</li><li>Observed: HTTPS page responded with HTTP 200 and full HLS master had correct MIME type.</li><li>Still to QA: full-duration viewing, audio, near-end seeking and mobile/TV compatibility.</li><li>Not built: authentication, viewer-level private access, multi-tenancy or studio billing.</li></ul>
+<div class="lab-note">This is a single-video learning beta, not a public streaming SaaS. Private footage, viewer URLs, AWS account details and certificate DNS tokens are intentionally excluded.</div>
+<p><a href="https://github.com/dupatanekrishna/aws_s3_documents/blob/main/labs/cinemaplay-beta-deployment.md" rel="noopener noreferrer">Read complete AWS deployment, DNS, IAM, HLS and troubleshooting runbook →</a></p>
+<p><a href="https://github.com/dupatanekrishna/dkalki-domain-hosting-lab/blob/main/domain/07-cinemaplay-cloudfront.md" rel="noopener noreferrer">Read GoDaddy + CloudFront domain lab →</a></p></section>
+</main><footer class="lab-footer"><span>Completed beta documented October 2026 · DUPATANE</span><a href="../../#work">Back to portfolio</a></footer></body></html>
